@@ -1,12 +1,15 @@
 # HadHadFakeUncert
+## Dependencies
+* ROOT
+* python 2.6.6 or higher
 ## Usage
 * First usage
 ```
-fix-file /path/to/rootfile.root
+./fix-file /path/to/rootfile.root
 ```
 * Rerun
 ```
-fix-file /path/to/rootfile.root --reset
+./fix-file /path/to/rootfile.root --reset
 ```
 
 ## Output
