@@ -1,0 +1,60 @@
+#!/usr/bin/env python
+import ROOT
+import shutil
+import os
+import logging
+logging.basicConfig()
+log = logging.getLogger('fix-file')
+log.setLevel(logging.INFO)
+
+
+from uncert import get_categories, update_file
+
+if __name__ == '__main__':
+
+    from argparse import ArgumentParser
+    parser = ArgumentParser()
+    parser.add_argument('file')
+    parser.add_argument('--reset', action='store_true', default=False)
+    args = parser.parse_args()
+
+    # protection against stupid input
+    if not os.path.exists(args.file):
+        log.error('wrong path for input file')
+        raise RuntimeError('wrong path for input file')
+
+ 
+    new_name = 'faked_' + os.path.basename(args.file)
+    new_file = os.path.join(
+        os.path.dirname(args.file), new_name)
+
+    log.info('Creating {0} from {1}'.format(
+            new_file, args.file))
+
+    # protection against existing file
+    if os.path.exists(new_file):
+        if args.reset:
+            os.remove(new_file)
+        else:
+            log.error('{0} already exists, use --reset argument'.format(
+                    new_file))
+    
+
+    shutil.copy(args.file, new_file)
+    
+    
+    cats = get_categories(new_file)
+    print cats
+
+    for cat in cats:
+        log.info(cat)
+
+        log.info('\t fake_extrapolation')
+        update_file(
+            new_file, cat, 
+            'fake_extrapolation')
+
+        log.info('\t fake_contamination')
+        update_file(
+            new_file, cat, 
+            'fake_contamination')
