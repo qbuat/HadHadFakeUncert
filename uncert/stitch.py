@@ -24,6 +24,11 @@ def get_categories(file_name):
 
 
 def name_lookup(category, np_name, var='high'):
+
+    abs_path = os.path.abspath(__file__)
+    dir_name = os.path.dirname(abs_path)
+    cache_path = os.path.join(dir_name, '../cache')
+    print abs_path, dir_name, cache_path
     if np_name == 'fake_contamination':
         file_name = './cache/buggy_fake_contamination.root'
         if 'vbf' in category:
