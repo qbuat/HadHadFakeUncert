@@ -38,7 +38,7 @@ if __name__ == '__main__':
         else:
             log.error('{0} already exists, use --reset argument'.format(
                     new_file))
-    
+            raise RuntimeError('file {0} already exists'.format(new_file))
 
     shutil.copy(args.file, new_file)
     
