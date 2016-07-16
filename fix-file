@@ -44,7 +44,7 @@ if __name__ == '__main__':
     
     
     cats = get_categories(new_file)
-    print cats
+    log.info('categories: {0}'.format(cats))
 
     for cat in cats:
         log.info(cat)
